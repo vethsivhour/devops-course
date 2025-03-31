@@ -26,10 +26,12 @@ buildNumber.properties
 .vscode/
 
 # Mac OS
-.DS_Store
+# Docker volumes
+jenkins_home/
+mysql/
 
-# Java
-*.class
+# Other common files to ignore
+.DS_Store
 *.log
 *.ctxt
 .mtj.tmp/
