@@ -13,9 +13,9 @@ pipeline {
             }
         }
         
-        stage('Build') {
+        stage('Build and Test') {
             steps {
-                sh 'mvn clean compile'
+                sh 'mvn clean compile test'
             }
         }
         
@@ -27,7 +27,7 @@ pipeline {
         
         stage('Run') {
             steps {
-                sh 'java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.HelloWorldApp'
+                sh 'java -cp target/HelloWorldApp-1.0-SNAPSHOT.jar com.mycompany.app.HelloWorldApp'
             }
         }
     }
