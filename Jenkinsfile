@@ -58,9 +58,21 @@ pipeline {
     post {
         success {
             echo 'Pipeline succeeded! Application is ready.'
+            emailext (
+                subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
+                body: "Build completed successfully. Check the build at: ${env.BUILD_URL}",
+                to: 'vethsivhour@gmail.com',
+                attachLog: true
+            )
         }
         failure {
             echo 'Pipeline failed! Check the logs for details.'
+            emailext (
+                subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+                body: "Build failed. Check the build at: ${env.BUILD_URL}",
+                to: 'vethsivhour@gmail.com',
+                attachLog: true
+            )
         }
         always {
             cleanWs()
