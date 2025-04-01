@@ -13,15 +13,31 @@ pipeline {
             }
         }
         
+        stage('Code Quality') {
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
+        }
+        
         stage('Build and Test') {
             steps {
                 sh 'mvn clean compile test'
+            }
+            post {
+                success {
+                    junit '**/target/surefire-reports/*.xml'
+                }
             }
         }
         
         stage('Package') {
             steps {
                 sh 'mvn package'
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                }
             }
         }
         
@@ -33,7 +49,7 @@ pipeline {
                     echo "Jar file content:"
                     jar tvf target/HelloWorldApp-1.0-SNAPSHOT.jar
                     echo "Running application:"
-                    java -cp target/HelloWorldApp-1.0-SNAPSHOT.jar com.mycompany.app.HelloWorldApp
+                    java -cp target/HelloWorldApp-1.0-SNAPSHOT.jar com.mycompany.app.App
                 '''
             }
         }
@@ -41,10 +57,13 @@ pipeline {
     
     post {
         success {
-            echo 'Pipeline succeeded!'
+            echo 'Pipeline succeeded! Application is ready.'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo 'Pipeline failed! Check the logs for details.'
+        }
+        always {
+            cleanWs()
         }
     }
 }
