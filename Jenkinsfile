@@ -27,8 +27,24 @@ pipeline {
         
         stage('Run') {
             steps {
-                sh 'java -cp target/HelloWorldApp-1.0-SNAPSHOT.jar com.mycompany.app.HelloWorldApp'
+                sh '''
+                    echo "Listing target directory:"
+                    ls -l target/
+                    echo "Jar file content:"
+                    jar tvf target/HelloWorldApp-1.0-SNAPSHOT.jar
+                    echo "Running application:"
+                    java -cp target/HelloWorldApp-1.0-SNAPSHOT.jar com.mycompany.app.HelloWorldApp
+                '''
             }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
