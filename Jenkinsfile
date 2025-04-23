@@ -38,6 +38,12 @@ pipeline {
                 sh 'php artisan view:cache'
             }
         }
+        
+        stage('Hello World') {
+            steps {
+                sh 'php hello-world.php'
+            }
+        }
     }
     
     post {
