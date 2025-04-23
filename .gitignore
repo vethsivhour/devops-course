@@ -26,12 +26,14 @@ buildNumber.properties
 .vscode/
 
 # Mac OS
+.DS_Store
+
 # Docker volumes
 jenkins_home/
 mysql/
+jenkins_agent_home/ # Added this based on docker-compose
 
 # Other common files to ignore
-.DS_Store
 *.log
 *.ctxt
 .mtj.tmp/
@@ -49,3 +51,19 @@ replay_pid*
 bin/
 build/
 out/
+
+# Laravel Project Specific
+laravel-project/node_modules
+laravel-project/public/build
+laravel-project/public/hot
+laravel-project/public/storage
+laravel-project/storage/*.key
+laravel-project/vendor
+laravel-project/.env
+laravel-project/.env.backup
+laravel-project/.phpunit.result.cache
+laravel-project/Homestead.json
+laravel-project/Homestead.yaml
+laravel-project/npm-debug.log
+laravel-project/yarn-error.log
+laravel-project/phpunit.xml

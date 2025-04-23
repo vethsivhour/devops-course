@@ -11,6 +11,7 @@ services:
       - "./jenkins_home:/var/jenkins_home"
     links:
       - "db:database"
+      - agent1
   db:
     image: mysql:latest
     user: root
@@ -18,3 +19,15 @@ services:
       MYSQL_ROOT_PASSWORD: example
     volumes:
       - "./mysql:/var/lib/mysql"
+
+  agent1:
+    build: ./laravel-agent # Corrected build path
+    image: i4b/jenkins-agent:latest 
+    container_name: jenkins-laravel-agent-i4a
+    ports:
+      - "2222:22" 
+    environment: 
+      # Ensure environment variable format is correct (KEY=VALUE)
+      - JENKINS_AGENT_SSH_PUBKEY=ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZtQy0cRjEFy/+V+g3OyC08pFApJMijHqe2+JpDQ02f apple@Apples-Macbook-Air
+    volumes: 
+      - "./jenkins_agent_home:/var/jenkins_home" # Ensure this volume path is intended
